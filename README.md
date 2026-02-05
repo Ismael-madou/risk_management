@@ -78,29 +78,44 @@ Displays:
 ## 🗂️ Project Structure
 
 ```
-financial-risk-var-es/
+Gestion_risques/
+├── data/
+├── src/
+│   ├── __init__.py
+│   ├── back_test.py
+│   ├── data_save.py
+│   ├── export_excel.py
+│   └── risk_metrics.py
+├── tests/
+│   ├── test_back_test.py
+│   ├── test_data_save.py
+│   ├── test_export_excel.py
+│   └── test_risk_metrics.py
+├── .gitignore
+├── .pre-commit-config.yaml
+├── .python-version
 ├── app.py
 ├── pyproject.toml
-├── uv.lock
 ├── README.md
-├── .gitignore
-└── src/
-    ├── __init__.py
-    ├── data_save.py
-    ├── risk_metrics.py
-    ├── back_test.py
-    └── export_excel.py
+└── uv.lock
 ```
 
 ### Files overview
-- **app.py**: Streamlit UI (Parameters tab + Results tab + Excel export)
-- **pyproject.toml**: uv project config + dependencies
+- **app.py**: Streamlit UI (parameters tab, results tab, Excel export)
+- **pyproject.toml**: uv project configuration and dependencies
 - **uv.lock**: locked dependency versions for reproducible installs
-- **src/**: application modules
-  - **data_save.py**: download prices + compute log-returns/losses
-  - **risk_metrics.py**: rolling VaR/ES computation
-  - **back_test.py**: Kupiec VaR backtest + simple ES backtest
-  - **export_excel.py**: create Excel file in-memory for download
+
+- **src/**: core application modules
+  - **data_save.py**: compute log-returns and losses from price data
+  - **risk_metrics.py**: rolling VaR and ES metrics computation
+  - **back_test.py**: Kupiec VaR backtesting and simple ES backtesting
+  - **export_excel.py**: in-memory Excel generation for results download
+
+- **tests/**: unit tests for core modules
+  - **test_data_save.py**: tests for log-return computations
+  - **test_risk_metrics.py**: tests for rolling VaR/ES metrics
+  - **test_back_test.py**: tests for VaR and ES backtesting
+  - **test_export_excel.py**: tests for Excel export functionality
 
 ## 🌐 Deployment
 
