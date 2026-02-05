@@ -54,13 +54,19 @@ with tab_params:
 
     c3, c4, c5 = st.columns(3)
     with c3:
-        window_days = st.slider("Fenêtre estimation (jours bourse ~ 2 ans)", 252, 800, 504, step=21)
+        window_days = st.slider(
+            "Fenêtre estimation (jours bourse ~ 2 ans)", 252, 800, 504, step=21
+        )
     with c4:
         test_days = st.slider("Période backtesting (jours ~ 1 an)", 200, 300, 252)
     with c5:
-        alpha_var = st.number_input("Alpha VaR (VaR 99% => 0.01)", 0.001, 0.1, 0.01, 0.001, format="%.3f")
+        alpha_var = st.number_input(
+            "Alpha VaR (VaR 99% => 0.01)", 0.001, 0.1, 0.01, 0.001, format="%.3f"
+        )
 
-    alpha_es = st.number_input("Alpha ES (ES 97.5% => 0.025)", 0.001, 0.2, 0.025, 0.001, format="%.3f")
+    alpha_es = st.number_input(
+        "Alpha ES (ES 97.5% => 0.025)", 0.001, 0.2, 0.025, 0.001, format="%.3f"
+    )
 
     st.divider()
     debug = st.checkbox("🔎 Mode debug", value=True)
@@ -79,7 +85,9 @@ with tab_params:
                 st.write("DEBUG data_save module:", load_prices.__module__)
 
             with st.spinner("Téléchargement des données..."):
-                prices = load_prices(ticker, start_date.isoformat(), end_date.isoformat())
+                prices = load_prices(
+                    ticker, start_date.isoformat(), end_date.isoformat()
+                )
 
             if debug:
                 st.write("DEBUG prices columns:", prices.columns.tolist())
@@ -98,15 +106,20 @@ with tab_params:
                     window_days=window_days,
                     test_days=test_days,
                     alpha_var=alpha_var,
-                    alpha_es=alpha_es
+                    alpha_es=alpha_es,
                 )
 
-                bt_var = pd.concat([
-                    backtest_var(results, "VaR99_norm_loss", alpha=alpha_var),
-                    backtest_var(results, "VaR99_hist_loss", alpha=alpha_var),
-                ], ignore_index=True)
+                bt_var = pd.concat(
+                    [
+                        backtest_var(results, "VaR99_norm_loss", alpha=alpha_var),
+                        backtest_var(results, "VaR99_hist_loss", alpha=alpha_var),
+                    ],
+                    ignore_index=True,
+                )
 
-                bt_es = backtest_es_simple(results, "ES97_5_hist_loss", alpha_es=alpha_es)
+                bt_es = backtest_es_simple(
+                    results, "ES97_5_hist_loss", alpha_es=alpha_es
+                )
 
             st.session_state.computed = True
             st.session_state.results = results
@@ -142,9 +155,19 @@ with tab_results:
         st.markdown("### Pertes vs VaR (99%)")
 
         fig = plt.figure()
-        plt.plot(pd.to_datetime(results["date"]), results["loss_real"], label="Pertes (L)")
-        plt.plot(pd.to_datetime(results["date"]), results["VaR99_norm_loss"], label="VaR99 Normale")
-        plt.plot(pd.to_datetime(results["date"]), results["VaR99_hist_loss"], label="VaR99 Historique")
+        plt.plot(
+            pd.to_datetime(results["date"]), results["loss_real"], label="Pertes (L)"
+        )
+        plt.plot(
+            pd.to_datetime(results["date"]),
+            results["VaR99_norm_loss"],
+            label="VaR99 Normale",
+        )
+        plt.plot(
+            pd.to_datetime(results["date"]),
+            results["VaR99_hist_loss"],
+            label="VaR99 Historique",
+        )
         plt.legend()
         plt.xticks(rotation=45)
         plt.tight_layout()

@@ -3,9 +3,7 @@ import pandas as pd
 
 
 def results_to_excel_bytes(
-    results: pd.DataFrame,
-    backtest_var_df: pd.DataFrame,
-    backtest_es_df: pd.DataFrame
+    results: pd.DataFrame, backtest_var_df: pd.DataFrame, backtest_es_df: pd.DataFrame
 ) -> bytes:
     """
     Génère un Excel (3 feuilles) en mémoire et retourne les bytes.

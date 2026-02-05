@@ -12,12 +12,13 @@ def load_prices(ticker: str, start: str, end: str) -> pd.DataFrame:
     if data.empty:
         raise ValueError(f"Aucune donnée pour {ticker}. Vérifie le ticker.")
 
-    # yfinance peut retourner des colonnes MultiIndex selon les versions
     if isinstance(data.columns, pd.MultiIndex):
         data.columns = [c[0] for c in data.columns]
 
     if "Close" not in data.columns:
-        raise ValueError(f"Colonne 'Close' introuvable. Colonnes disponibles: {list(data.columns)}")
+        raise ValueError(
+            f"Colonne 'Close' introuvable. Colonnes disponibles: {list(data.columns)}"
+        )
 
     out = data[["Close"]].rename(columns={"Close": "close"}).copy()
     out.index = pd.to_datetime(out.index)
@@ -41,7 +42,9 @@ def compute_log_returns(data_prices: pd.DataFrame) -> pd.DataFrame:
     expected = {"date", "close"}
     missing = expected - set(data.columns)
     if missing:
-        raise ValueError(f"Colonnes manquantes dans data_prices: {missing}. Colonnes: {list(data.columns)}")
+        raise ValueError(
+            f"Colonnes manquantes dans data_prices: {missing}. Colonnes: {list(data.columns)}"
+        )
 
     data = data.sort_values("date").reset_index(drop=True)
 

@@ -5,10 +5,10 @@ from scipy.stats import norm
 
 def compute_rolling_metrics(
     df_ret: pd.DataFrame,
-    window_days: int = 504,      # ~ 2 ans bourse
-    test_days: int = 252,        # ~ 1 an
-    alpha_var: float = 0.01,     # VaR 99% => quantile 1%
-    alpha_es: float = 0.025      # ES 97.5% => quantile 2.5%
+    window_days: int = 504,  # ~ 2 ans bourse
+    test_days: int = 252,  # ~ 1 an
+    alpha_var: float = 0.01,  # VaR 99% => quantile 1%
+    alpha_es: float = 0.025,  # ES 97.5% => quantile 2.5%
 ) -> pd.DataFrame:
     """
     Pour chaque jour t de la période de test (dernière année):
@@ -28,7 +28,7 @@ def compute_rolling_metrics(
 
     rows = []
     for i in range(window_days, len(df)):
-        w = r[i - window_days:i]
+        w = r[i - window_days : i]
         mu = w.mean()
         sig = w.std(ddof=1)
 
@@ -40,14 +40,16 @@ def compute_rolling_metrics(
         q_es = np.quantile(w, alpha_es)
         es_hist_r = w[w <= q_es].mean()
 
-        rows.append({
-            "date": df.loc[i, "date"],
-            "r_real": float(r[i]),
-            "loss_real": float(-r[i]),
-            "VaR99_norm_loss": float(-var_norm_r),
-            "VaR99_hist_loss": float(-var_hist_r),
-            "ES97_5_hist_loss": float(-es_hist_r),
-        })
+        rows.append(
+            {
+                "date": df.loc[i, "date"],
+                "r_real": float(r[i]),
+                "loss_real": float(-r[i]),
+                "VaR99_norm_loss": float(-var_norm_r),
+                "VaR99_hist_loss": float(-var_hist_r),
+                "ES97_5_hist_loss": float(-es_hist_r),
+            }
+        )
 
     out = pd.DataFrame(rows).tail(test_days).reset_index(drop=True)
     return out
