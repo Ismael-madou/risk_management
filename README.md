@@ -77,3 +77,69 @@ Displays:
 
 ## 🗂️ Project Structure
 
+financial-risk-var-es/
+├── app.py
+├── pyproject.toml
+├── uv.lock
+├── README.md
+├── .gitignore
+│
+└── src/
+├── init.py
+├── data_save.py
+├── risk_metrics.py
+├── back_test.py
+└── export_excel.py
+
+
+### Files overview
+- **app.py**: Streamlit UI (Parameters tab + Results tab + Excel export)
+- **pyproject.toml**: uv project config + dependencies
+- **uv.lock**: locked dependency versions for reproducible installs
+- **src/**: application modules
+  - **data_save.py**: download prices + compute log-returns/losses
+  - **risk_metrics.py**: rolling VaR/ES computation
+  - **back_test.py**: Kupiec VaR backtest + simple ES backtest
+  - **export_excel.py**: create Excel file in-memory for download
+
+## 🌐 Deployment
+
+The project is deployed for free on **Streamlit Community Cloud**.
+
+---
+
+## 📦 Main Dependencies
+
+- streamlit
+- pandas
+- numpy
+- scipy
+- yfinance
+- matplotlib
+- openpyxl
+
+---
+
+## 👨‍🎓 Academic Context
+
+Project developed for the **Financial Risk Management** course  
+Master SEP — University of Reims Champagne-Ardenne  
+Academic year 2025–2026
+
+---
+
+## ✅ What This Project Demonstrates
+
+- Practical implementation of VaR and ES
+- Comparison between parametric and empirical approaches
+- Statistical backtesting
+- Educational visualization tool
+- Interactive experimentation with real market data
+
+---
+
+## 👤 Author
+
+**Ismael Madou Gagi**  
+Master SEP — University of Reims
+
