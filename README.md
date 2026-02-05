@@ -77,20 +77,20 @@ Displays:
 
 ## 🗂️ Project Structure
 
+```
 financial-risk-var-es/
 ├── app.py
 ├── pyproject.toml
 ├── uv.lock
 ├── README.md
 ├── .gitignore
-│
 └── src/
-├── init.py
-├── data_save.py
-├── risk_metrics.py
-├── back_test.py
-└── export_excel.py
-
+    ├── __init__.py
+    ├── data_save.py
+    ├── risk_metrics.py
+    ├── back_test.py
+    └── export_excel.py
+```
 
 ### Files overview
 - **app.py**: Streamlit UI (Parameters tab + Results tab + Excel export)
